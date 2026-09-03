@@ -127,11 +127,6 @@ h2 {
   background: #0d3768;
 }
 
-.algarismo:disabled {
-  background: #9aa8bb;
-  cursor: default;
-}
-
 .acoes {
   display: flex;
   justify-content: center;
@@ -247,9 +242,7 @@ NÍVEL 3<br>
 </button>
 
 </div>
-
 </div>
-
 
 <div id="jogo">
 
@@ -291,16 +284,13 @@ NÍVEL 3<br>
 
 </div>
 
-
 <div id="resultadoFinal"></div>
-
 
 <footer>
 © 2026 Professora Lígia Andrade — Todos os direitos reservados.
 </footer>
 
 </div>
-
 
 <script>
 
@@ -457,15 +447,11 @@ function iniciarJogo(nivel) {
 function sortearNumero() {
 
   if (nivelAtual === 1) {
-
     return Math.floor(Math.random() * 90) + 10;
-
   }
 
   if (nivelAtual === 2) {
-
     return Math.floor(Math.random() * 900) + 100;
-
   }
 
   return Math.floor(Math.random() * 9000) + 1000;
@@ -531,10 +517,7 @@ function criarAlgarismos() {
 
     botao.onclick = function() {
 
-      adicionarAlgarismo(
-        algarismo,
-        botao
-      );
+      adicionarAlgarismo(algarismo);
 
     };
 
@@ -544,21 +527,18 @@ function criarAlgarismos() {
 }
 
 
-function adicionarAlgarismo(algarismo, botao) {
+function adicionarAlgarismo(algarismo) {
 
-  const tamanhoNecessario =
-    numeroAtual.toString().length;
-
-  if (numeroMontado.length >= tamanhoNecessario) {
-    return;
-  }
+  /*
+   NÃO HÁ LIMITE DE CLIQUES.
+   A criança pode clicar no mesmo algarismo
+   quantas vezes precisar.
+  */
 
   numeroMontado += algarismo;
 
   document.getElementById("numeroMontado").innerText =
     numeroMontado;
-
-  botao.disabled = true;
 }
 
 
@@ -618,7 +598,7 @@ function conferirNumero() {
       "💭 AINDA NÃO! TENTE NOVAMENTE.";
 
     document.getElementById("composicao").innerText =
-      "DICA: observe quantos algarismos o número precisa ter e a posição de cada um.";
+      "DICA: observe a quantidade de algarismos e a posição de cada um.";
 
     numeroMontado = "";
 
@@ -706,11 +686,9 @@ function mostrarComposicao() {
   }
 
   document.getElementById("composicao").innerHTML =
-
     "<strong>" +
     numeroAtual +
     "</strong><br>" +
-
     partes.join(" + ");
 }
 
@@ -718,10 +696,8 @@ function mostrarComposicao() {
 function atualizarPlacar() {
 
   document.getElementById("placar").innerText =
-
     "✅ ACERTOS: " +
     acertos +
-
     "     ❌ ERROS: " +
     erros;
 }
@@ -739,7 +715,6 @@ function encerrarJogo() {
     "none";
 
   let percentual =
-
     tentativas > 0
       ? Math.round(
           (acertos / tentativas) * 100
@@ -773,11 +748,8 @@ function encerrarJogo() {
     percentual +
     "%<br><br>" +
 
-    "<button id='jogarNovamente' " +
-    "onclick='voltarInicio()'>" +
-
+    "<button id='jogarNovamente' onclick='voltarInicio()'>" +
     "🔄 JOGAR NOVAMENTE" +
-
     "</button>";
 }
 
