@@ -1,539 +1,629 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monte o Número</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monte o Número</title>
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #eef4ff;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
-  color: #222;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-.caixa {
-  max-width: 700px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 24px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef4ff;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
 
-h1 {
-  color: #173f7a;
-  font-size: 32px;
-}
+    .caixa {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 24px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    }
 
-h2 {
-  color: #315fa8;
-}
+    h1 {
+      color: #173f7a;
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
 
-#nome {
-  width: 85%;
-  max-width: 450px;
-  padding: 14px;
-  font-size: 18px;
-  border: 2px solid #b8c8e8;
-  border-radius: 12px;
-  margin: 10px;
-}
+    h2 {
+      color: #3157a4;
+    }
 
-.niveis {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 25px 0;
-}
+    .nome-area {
+      margin: 20px 0;
+    }
 
-.nivel {
-  background: #174b8a;
-  color: white;
-  border: none;
-  padding: 16px 22px;
-  border-radius: 14px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    input {
+      width: 90%;
+      max-width: 400px;
+      padding: 14px;
+      border: 2px solid #3157a4;
+      border-radius: 12px;
+      font-size: 20px;
+      text-align: center;
+    }
 
-.nivel:hover {
-  background: #0d3768;
-}
+    button {
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+    }
 
-#jogo {
-  display: none;
-}
+    .botao-principal {
+      background: #173f7a;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 28px;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px;
+    }
 
-#nivelAtual {
-  font-size: 20px;
-  font-weight: bold;
-  color: #315fa8;
-}
+    .nivel {
+      background: #3157a4;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 22px;
+      font-size: 19px;
+      font-weight: bold;
+      margin: 7px;
+    }
 
-#placar {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 15px;
-}
+    .nivel:hover,
+    .botao-principal:hover {
+      opacity: 0.9;
+    }
 
-#extenso {
-  font-size: 34px;
-  font-weight: bold;
-  color: #173f7a;
-  margin: 35px 10px;
-  text-transform: uppercase;
-}
+    #jogo {
+      display: none;
+    }
 
-#numeroMontado {
-  min-height: 60px;
-  font-size: 44px;
-  font-weight: bold;
-  color: #173f7a;
-  margin: 20px;
-  letter-spacing: 6px;
-  border-bottom: 3px solid #b8c8e8;
-  padding-bottom: 10px;
-}
+    #nivelAtual {
+      font-size: 21px;
+      font-weight: bold;
+      color: #173f7a;
+      margin-bottom: 12px;
+    }
 
-#algarismos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 25px auto;
-  max-width: 600px;
-}
+    #contador {
+      font-size: 18px;
+      margin: 10px;
+    }
 
-.algarismo {
-  width: 65px;
-  height: 65px;
-  background: #174b8a;
-  color: white;
-  border: none;
-  border-radius: 14px;
-  font-size: 30px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-}
+    #numeroPorExtenso {
+      font-size: 38px;
+      font-weight: bold;
+      color: #173f7a;
+      margin: 30px 10px;
+      text-transform: uppercase;
+    }
 
-.algarismo:hover {
-  background: #0d3768;
-}
+    #numeroMontado {
+      min-height: 65px;
+      border: 3px dashed #3157a4;
+      border-radius: 16px;
+      margin: 20px auto;
+      max-width: 500px;
+      padding: 12px;
+      font-size: 42px;
+      font-weight: bold;
+      color: #173f7a;
+      background: #f7faff;
+      letter-spacing: 8px;
+    }
 
-.acoes {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 25px 0;
-}
+    .algarismos {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      max-width: 500px;
+      margin: 20px auto;
+    }
 
-.acao {
-  border: none;
-  padding: 13px 22px;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .algarismo {
+      background: #173f7a;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 17px 10px;
+      font-size: 30px;
+      font-weight: bold;
+      min-height: 65px;
+    }
 
-#limpar {
-  background: #dce6f5;
-  color: #173f7a;
-}
+    .algarismo:hover {
+      background: #0f2e5c;
+    }
 
-#conferir {
-  background: #174b8a;
-  color: white;
-}
+    .acoes {
+      margin-top: 20px;
+    }
 
-#proximo {
-  background: #2f7d45;
-  color: white;
-  display: none;
-}
+    .acao {
+      border: none;
+      border-radius: 12px;
+      padding: 13px 22px;
+      font-size: 19px;
+      font-weight: bold;
+      margin: 5px;
+    }
 
-#encerrar {
-  background: #a52d2d;
-  color: white;
-}
+    #limpar {
+      background: #d9e5f7;
+      color: #173f7a;
+    }
 
-#mensagem {
-  min-height: 40px;
-  font-size: 22px;
-  font-weight: bold;
-  margin: 20px;
-}
+    #conferir {
+      background: #173f7a;
+      color: white;
+    }
 
-#composicao {
-  font-size: 21px;
-  line-height: 1.7;
-  color: #333;
-  margin: 15px;
-}
+    #proximo {
+      display: none;
+      background: #3157a4;
+      color: white;
+    }
 
-#resultadoFinal {
-  display: none;
-  font-size: 24px;
-  line-height: 1.7;
-}
+    #encerrar {
+      background: #7a2531;
+      color: white;
+    }
 
-#jogarNovamente {
-  background: #173f7a;
-  color: white;
-  border: none;
-  padding: 15px 25px;
-  border-radius: 12px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    #mensagem {
+      min-height: 45px;
+      font-size: 23px;
+      font-weight: bold;
+      margin: 20px 10px;
+    }
 
-footer {
-  margin-top: 30px;
-  font-size: 14px;
-  color: #666;
-}
-</style>
+    #composicao {
+      font-size: 20px;
+      line-height: 1.6;
+      margin: 15px;
+    }
+
+    #resultado {
+      display: none;
+      margin-top: 25px;
+      font-size: 23px;
+      line-height: 1.7;
+    }
+
+    #jogarNovamente {
+      display: none;
+      background: #173f7a;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 25px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      #numeroPorExtenso {
+        font-size: 30px;
+      }
+
+      #numeroMontado {
+        font-size: 34px;
+      }
+
+      .algarismos {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 7px;
+      }
+
+      .algarismo {
+        font-size: 25px;
+        padding: 13px 5px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="caixa">
 
-<h1>🔢 MONTE O NÚMERO</h1>
+  <h1>🔢 MONTE O NÚMERO</h1>
 
-<div id="inicio">
+  <div id="inicio">
 
-<h2>Vamos construir números!</h2>
+    <h2>Vamos aprender a montar números!</h2>
 
-<p>
-Leia o número por extenso e monte-o usando os algarismos.
-</p>
+    <div class="nome-area">
+      <input
+        type="text"
+        id="nome"
+        placeholder="Digite o nome da criança"
+      >
+    </div>
 
-<input
-  id="nome"
-  type="text"
-  placeholder="Digite o nome da criança"
->
+    <p><strong>Escolha um nível:</strong></p>
 
-<div class="niveis">
+    <button class="nivel" onclick="iniciarJogo(1)">
+      NÍVEL 1 — DEZENAS
+    </button>
 
-<button class="nivel" onclick="iniciarJogo(1)">
-NÍVEL 1<br>
-10 A 99
-</button>
+    <button class="nivel" onclick="iniciarJogo(2)">
+      NÍVEL 2 — CENTENAS
+    </button>
 
-<button class="nivel" onclick="iniciarJogo(2)">
-NÍVEL 2<br>
-100 A 999
-</button>
+    <button class="nivel" onclick="iniciarJogo(3)">
+      NÍVEL 3 — MILHARES
+    </button>
 
-<button class="nivel" onclick="iniciarJogo(3)">
-NÍVEL 3<br>
-1.000 A 9.999
-</button>
+  </div>
+
+
+  <div id="jogo">
+
+    <div id="nivelAtual"></div>
+
+    <div id="contador"></div>
+
+    <div id="numeroPorExtenso"></div>
+
+    <div>
+      <strong>MONTE O NÚMERO:</strong>
+    </div>
+
+    <div id="numeroMontado"></div>
+
+    <div class="algarismos">
+
+      <button class="algarismo" onclick="adicionarAlgarismo('0')">0</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('1')">1</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('2')">2</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('3')">3</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('4')">4</button>
+
+      <button class="algarismo" onclick="adicionarAlgarismo('5')">5</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('6')">6</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('7')">7</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('8')">8</button>
+      <button class="algarismo" onclick="adicionarAlgarismo('9')">9</button>
+
+    </div>
+
+    <div class="acoes">
+
+      <button class="acao" id="limpar" onclick="limparNumero()">
+        🧹 LIMPAR
+      </button>
+
+      <button class="acao" id="conferir" onclick="conferirNumero()">
+        ✅ CONFERIR
+      </button>
+
+      <button class="acao" id="proximo" onclick="proximaPergunta()">
+        ➜ PRÓXIMO
+      </button>
+
+      <button class="acao" id="encerrar" onclick="encerrarJogo()">
+        ⏹️ ENCERRAR JOGO
+      </button>
+
+    </div>
+
+    <div id="mensagem"></div>
+
+    <div id="composicao"></div>
+
+  </div>
+
+
+  <div id="resultado"></div>
+
+  <button id="jogarNovamente" onclick="voltarInicio()">
+    🔄 JOGAR NOVAMENTE
+  </button>
+
+
+  <footer>
+    © 2026 Professora Lígia Andrade — Todos os direitos reservados.
+  </footer>
 
 </div>
-</div>
 
-<div id="jogo">
-
-<div id="nivelAtual"></div>
-
-<div id="placar">
-✅ ACERTOS: 0 &nbsp;&nbsp; ❌ ERROS: 0
-</div>
-
-<div id="extenso"></div>
-
-<div id="numeroMontado"></div>
-
-<div id="algarismos"></div>
-
-<div class="acoes">
-
-<button class="acao" id="limpar" onclick="limparNumero()">
-🧹 LIMPAR
-</button>
-
-<button class="acao" id="conferir" onclick="conferirNumero()">
-✅ CONFERIR
-</button>
-
-<button class="acao" id="proximo" onclick="proximaQuestao()">
-➡️ PRÓXIMO
-</button>
-
-<button class="acao" id="encerrar" onclick="encerrarJogo()">
-⏹️ ENCERRAR JOGO
-</button>
-
-</div>
-
-<div id="mensagem"></div>
-
-<div id="composicao"></div>
-
-</div>
-
-<div id="resultadoFinal"></div>
-
-<footer>
-© 2026 Professora Lígia Andrade — Todos os direitos reservados.
-</footer>
-
-</div>
 
 <script>
 
-let nivelAtual = 1;
-let numeroAtual = 0;
-let numeroMontado = "";
+const numerosPorExtenso = {
 
-let acertos = 0;
-let erros = 0;
-let tentativas = 0;
+  10:"dez",
+  11:"onze",
+  12:"doze",
+  13:"treze",
+  14:"quatorze",
+  15:"quinze",
+  16:"dezesseis",
+  17:"dezessete",
+  18:"dezoito",
+  19:"dezenove",
+  20:"vinte",
+  21:"vinte e um",
+  22:"vinte e dois",
+  23:"vinte e três",
+  24:"vinte e quatro",
+  25:"vinte e cinco",
+  26:"vinte e seis",
+  27:"vinte e sete",
+  28:"vinte e oito",
+  29:"vinte e nove",
+  30:"trinta",
+  31:"trinta e um",
+  32:"trinta e dois",
+  33:"trinta e três",
+  34:"trinta e quatro",
+  35:"trinta e cinco",
+  36:"trinta e seis",
+  37:"trinta e sete",
+  38:"trinta e oito",
+  39:"trinta e nove",
+  40:"quarenta",
+  41:"quarenta e um",
+  42:"quarenta e dois",
+  43:"quarenta e três",
+  44:"quarenta e quatro",
+  45:"quarenta e cinco",
+  46:"quarenta e seis",
+  47:"quarenta e sete",
+  48:"quarenta e oito",
+  49:"quarenta e nove",
+  50:"cinquenta",
+  51:"cinquenta e um",
+  52:"cinquenta e dois",
+  53:"cinquenta e três",
+  54:"cinquenta e quatro",
+  55:"cinquenta e cinco",
+  56:"cinquenta e seis",
+  57:"cinquenta e sete",
+  58:"cinquenta e oito",
+  59:"cinquenta e nove",
+  60:"sessenta",
+  61:"sessenta e um",
+  62:"sessenta e dois",
+  63:"sessenta e três",
+  64:"sessenta e quatro",
+  65:"sessenta e cinco",
+  66:"sessenta e seis",
+  67:"sessenta e sete",
+  68:"sessenta e oito",
+  69:"sessenta e nove",
+  70:"setenta",
+  71:"setenta e um",
+  72:"setenta e dois",
+  73:"setenta e três",
+  74:"setenta e quatro",
+  75:"setenta e cinco",
+  76:"setenta e seis",
+  77:"setenta e sete",
+  78:"setenta e oito",
+  79:"setenta e nove",
+  80:"oitenta",
+  81:"oitenta e um",
+  82:"oitenta e dois",
+  83:"oitenta e três",
+  84:"oitenta e quatro",
+  85:"oitenta e cinco",
+  86:"oitenta e seis",
+  87:"oitenta e sete",
+  88:"oitenta e oito",
+  89:"oitenta e nove",
+  90:"noventa",
+  91:"noventa e um",
+  92:"noventa e dois",
+  93:"noventa e três",
+  94:"noventa e quatro",
+  95:"noventa e cinco",
+  96:"noventa e seis",
+  97:"noventa e sete",
+  98:"noventa e oito",
+  99:"noventa e nove",
 
-let nomeJogador = "";
+  100:"cem",
+  101:"cento e um",
+  102:"cento e dois",
+  110:"cento e dez",
+  111:"cento e onze",
+  112:"cento e doze",
+  120:"cento e vinte",
+  121:"cento e vinte e um",
+  122:"cento e vinte e dois",
+  150:"cento e cinquenta",
+  152:"cento e cinquenta e dois",
+  200:"duzentos",
+  210:"duzentos e dez",
+  215:"duzentos e quinze",
+  222:"duzentos e vinte e dois",
+  300:"trezentos",
+  321:"trezentos e vinte e um",
+  400:"quatrocentos",
+  432:"quatrocentos e trinta e dois",
+  500:"quinhentos",
+  555:"quinhentos e cinquenta e cinco",
+  600:"seiscentos",
+  654:"seiscentos e cinquenta e quatro",
+  700:"setecentos",
+  765:"setecentos e sessenta e cinco",
+  800:"oitocentos",
+  876:"oitocentos e setenta e seis",
+  900:"novecentos",
+  999:"novecentos e noventa e nove",
 
+  1000:"mil",
+  1001:"mil e um",
+  1010:"mil e dez",
+  1011:"mil e onze",
+  1020:"mil e vinte",
+  1052:"mil e cinquenta e dois",
+  1100:"mil e cem",
+  1111:"mil cento e onze",
+  1200:"mil e duzentos",
+  1234:"mil duzentos e trinta e quatro",
+  1500:"mil e quinhentos",
+  1523:"mil quinhentos e vinte e três",
+  2000:"dois mil",
+  2022:"dois mil e vinte e dois",
+  2345:"dois mil trezentos e quarenta e cinco",
+  3000:"três mil",
+  3456:"três mil quatrocentos e cinquenta e seis",
+  4000:"quatro mil",
+  4321:"quatro mil trezentos e vinte e um",
+  5000:"cinco mil",
+  5678:"cinco mil seiscentos e setenta e oito",
+  6000:"seis mil",
+  6543:"seis mil quinhentos e quarenta e três",
+  7000:"sete mil",
+  7654:"sete mil seiscentos e cinquenta e quatro",
+  8000:"oito mil",
+  8765:"oito mil setecentos e sessenta e cinco",
+  9000:"nove mil",
+  9999:"nove mil novecentos e noventa e nove"
 
-const unidades = [
-"",
-"um",
-"dois",
-"três",
-"quatro",
-"cinco",
-"seis",
-"sete",
-"oito",
-"nove"
-];
-
-
-const especiais = {
-10:"dez",
-11:"onze",
-12:"doze",
-13:"treze",
-14:"quatorze",
-15:"quinze",
-16:"dezesseis",
-17:"dezessete",
-18:"dezoito",
-19:"dezenove"
 };
 
 
-const dezenas = [
-"",
-"",
-"vinte",
-"trinta",
-"quarenta",
-"cinquenta",
-"sessenta",
-"setenta",
-"oitenta",
-"noventa"
-];
+let nivel = 1;
+let numeroAtual = 0;
+let numeroMontado = "";
+let tentativas = 0;
+let acertos = 0;
+let encerrado = false;
 
 
-const centenas = [
-"",
-"cento",
-"duzentos",
-"trezentos",
-"quatrocentos",
-"quinhentos",
-"seiscentos",
-"setecentos",
-"oitocentos",
-"novecentos"
-];
+function gerarNumero() {
 
+  let numero;
 
-function numeroPorExtenso(n) {
+  if (nivel === 1) {
 
-  if (n < 10) {
-    return unidades[n];
-  }
+    numero = Math.floor(Math.random() * 90) + 10;
 
-  if (n >= 10 && n <= 19) {
-    return especiais[n];
-  }
+  } else if (nivel === 2) {
 
-  if (n < 100) {
+    const numeros = [
+      100,101,102,110,111,112,
+      120,121,122,150,152,
+      200,210,215,222,
+      300,321,
+      400,432,
+      500,555,
+      600,654,
+      700,765,
+      800,876,
+      900,999
+    ];
 
-    let d = Math.floor(n / 10);
-    let u = n % 10;
+    numero = numeros[Math.floor(Math.random() * numeros.length)];
 
-    return dezenas[d] +
-      (u > 0 ? " e " + unidades[u] : "");
-  }
-
-  if (n === 100) {
-    return "cem";
-  }
-
-  if (n < 1000) {
-
-    let c = Math.floor(n / 100);
-    let resto = n % 100;
-
-    return centenas[c] +
-      (resto > 0 ? " e " + numeroPorExtenso(resto) : "");
-  }
-
-  let milhar = Math.floor(n / 1000);
-  let resto = n % 1000;
-
-  let textoMilhar;
-
-  if (milhar === 1) {
-    textoMilhar = "mil";
   } else {
-    textoMilhar = numeroPorExtenso(milhar) + " mil";
+
+    const numeros = [
+      1000,1001,1010,1011,1020,1052,
+      1100,1111,1200,1234,
+      1500,1523,2000,2022,2345,
+      3000,3456,4000,4321,
+      5000,5678,6000,6543,
+      7000,7654,8000,8765,
+      9000,9999
+    ];
+
+    numero = numeros[Math.floor(Math.random() * numeros.length)];
+
   }
 
-  if (resto === 0) {
-    return textoMilhar;
-  }
-
-  if (resto < 100) {
-    return textoMilhar + " e " + numeroPorExtenso(resto);
-  }
-
-  return textoMilhar + " " + numeroPorExtenso(resto);
+  return numero;
 }
 
 
-function iniciarJogo(nivel) {
+function iniciarJogo(n) {
 
-  nomeJogador =
-    document.getElementById("nome").value.trim();
-
-  if (nomeJogador === "") {
-    nomeJogador = "Aluno(a)";
-  }
-
-  nivelAtual = nivel;
-
-  acertos = 0;
-  erros = 0;
+  nivel = n;
   tentativas = 0;
+  acertos = 0;
+  encerrado = false;
 
-  document.getElementById("inicio").style.display =
-    "none";
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("resultado").style.display = "none";
+  document.getElementById("jogarNovamente").style.display = "none";
+  document.getElementById("jogo").style.display = "block";
 
-  document.getElementById("resultadoFinal").style.display =
-    "none";
+  if (nivel === 1) {
+    document.getElementById("nivelAtual").innerText =
+      "NÍVEL 1 — DEZENAS (10 A 99)";
+  }
 
-  document.getElementById("jogo").style.display =
-    "block";
+  if (nivel === 2) {
+    document.getElementById("nivelAtual").innerText =
+      "NÍVEL 2 — CENTENAS (100 A 999)";
+  }
 
-  novaQuestao();
+  if (nivel === 3) {
+    document.getElementById("nivelAtual").innerText =
+      "NÍVEL 3 — MILHARES";
+  }
+
+  novaPergunta();
 }
 
 
-function sortearNumero() {
+function novaPergunta() {
 
-  if (nivelAtual === 1) {
-    return Math.floor(Math.random() * 90) + 10;
-  }
-
-  if (nivelAtual === 2) {
-    return Math.floor(Math.random() * 900) + 100;
-  }
-
-  return Math.floor(Math.random() * 9000) + 1000;
-}
-
-
-function novaQuestao() {
-
-  numeroAtual = sortearNumero();
+  numeroAtual = gerarNumero();
 
   numeroMontado = "";
 
-  document.getElementById("nivelAtual").innerText =
-    "NÍVEL " + nivelAtual;
+  document.getElementById("numeroPorExtenso").innerText =
+    numerosPorExtenso[numeroAtual].toUpperCase();
 
-  document.getElementById("placar").innerText =
-    "✅ ACERTOS: " + acertos +
-    "     ❌ ERROS: " + erros;
+  document.getElementById("numeroMontado").innerText = "";
 
-  document.getElementById("extenso").innerText =
-    numeroPorExtenso(numeroAtual).toUpperCase();
+  document.getElementById("mensagem").innerText = "";
 
-  document.getElementById("numeroMontado").innerText =
-    "";
+  document.getElementById("composicao").innerText = "";
 
-  document.getElementById("mensagem").innerText =
-    "";
+  document.getElementById("proximo").style.display = "none";
 
-  document.getElementById("composicao").innerText =
-    "";
+  document.getElementById("limpar").style.display = "inline-block";
 
-  document.getElementById("proximo").style.display =
-    "none";
+  document.getElementById("conferir").style.display = "inline-block";
 
-  criarAlgarismos();
-}
-
-
-function criarAlgarismos() {
-
-  const area =
-    document.getElementById("algarismos");
-
-  area.innerHTML = "";
-
-  let algarismos = [
-    "0","1","2","3","4",
-    "5","6","7","8","9"
-  ];
-
-  algarismos.sort(() => Math.random() - 0.5);
-
-  algarismos.forEach(function(algarismo) {
-
-    const botao =
-      document.createElement("button");
-
-    botao.className =
-      "algarismo";
-
-    botao.innerText =
-      algarismo;
-
-    botao.onclick = function() {
-
-      adicionarAlgarismo(algarismo);
-
-    };
-
-    area.appendChild(botao);
-
-  });
+  atualizarContador();
 }
 
 
 function adicionarAlgarismo(algarismo) {
 
-  /*
-   NÃO HÁ LIMITE DE CLIQUES.
-   A criança pode clicar no mesmo algarismo
-   quantas vezes precisar.
-  */
+  if (encerrado) {
+    return;
+  }
+
+  // IMPORTANTE:
+  // O mesmo algarismo pode ser clicado quantas vezes forem necessárias.
+  // Não existe limite de repetição.
 
   numeroMontado += algarismo;
 
@@ -544,228 +634,185 @@ function adicionarAlgarismo(algarismo) {
 
 function limparNumero() {
 
+  if (encerrado) {
+    return;
+  }
+
   numeroMontado = "";
 
-  document.getElementById("numeroMontado").innerText =
-    "";
+  document.getElementById("numeroMontado").innerText = "";
 
-  document.getElementById("mensagem").innerText =
-    "";
+  document.getElementById("mensagem").innerText = "";
 
-  document.getElementById("composicao").innerText =
-    "";
-
-  criarAlgarismos();
+  document.getElementById("composicao").innerText = "";
 }
 
 
 function conferirNumero() {
 
+  if (encerrado) {
+    return;
+  }
+
   if (numeroMontado === "") {
 
     document.getElementById("mensagem").innerText =
-      "👆 MONTE O NÚMERO PRIMEIRO!";
+      "💡 MONTE O NÚMERO PRIMEIRO!";
 
     return;
   }
 
   tentativas++;
 
-  if (
-    numeroMontado ===
-    numeroAtual.toString()
-  ) {
+  if (numeroMontado === String(numeroAtual)) {
 
     acertos++;
 
     document.getElementById("mensagem").innerText =
-      "🎉 MUITO BEM, " +
-      nomeJogador +
-      "!";
+      "🎉 MUITO BEM! VOCÊ ACERTOU!";
 
-    mostrarComposicao();
+    mostrarComposicao(numeroAtual);
 
-    document.getElementById("proximo").style.display =
-      "inline-block";
+    document.getElementById("conferir").style.display = "none";
 
-    bloquearAlgarismos();
+    document.getElementById("limpar").style.display = "none";
+
+    document.getElementById("proximo").style.display = "inline-block";
 
   } else {
 
-    erros++;
-
     document.getElementById("mensagem").innerText =
-      "💭 AINDA NÃO! TENTE NOVAMENTE.";
+      "💭 AINDA NÃO. TENTE NOVAMENTE!";
 
     document.getElementById("composicao").innerText =
-      "DICA: observe a quantidade de algarismos e a posição de cada um.";
+      "DICA: OBSERVE QUANTOS ALGARISMOS O NÚMERO PRECISA TER.";
 
-    numeroMontado = "";
-
-    document.getElementById("numeroMontado").innerText =
-      "";
-
-    criarAlgarismos();
   }
 
-  atualizarPlacar();
+  atualizarContador();
 }
 
 
-function bloquearAlgarismos() {
+function mostrarComposicao(numero) {
 
-  const botoes =
-    document.querySelectorAll(".algarismo");
+  const texto = String(numero);
 
-  botoes.forEach(function(botao) {
-    botao.disabled = true;
-  });
-}
-
-
-function mostrarComposicao() {
-
-  let n = numeroAtual;
-
-  let milhar =
-    Math.floor(n / 1000);
-
-  let centena =
-    Math.floor((n % 1000) / 100);
-
-  let dezena =
-    Math.floor((n % 100) / 10);
-
-  let unidade =
-    n % 10;
+  const tamanho = texto.length;
 
   let partes = [];
 
-  if (milhar > 0) {
+  if (tamanho >= 4) {
 
-    partes.push(
-      milhar +
-      (milhar === 1
-        ? " milhar"
-        : " milhares")
-    );
+    const milhares = Number(texto[0]);
 
-  }
-
-  if (centena > 0) {
-
-    partes.push(
-      centena +
-      (centena === 1
-        ? " centena"
-        : " centenas")
-    );
+    if (milhares > 0) {
+      partes.push(
+        milhares + (milhares === 1 ? " MILHAR" : " MILHARES")
+      );
+    }
 
   }
 
-  if (dezena > 0) {
+  if (tamanho >= 3) {
 
-    partes.push(
-      dezena +
-      (dezena === 1
-        ? " dezena"
-        : " dezenas")
-    );
+    const centenas = Number(texto[tamanho - 3]);
+
+    if (centenas > 0) {
+      partes.push(
+        centenas + (centenas === 1 ? " CENTENA" : " CENTENAS")
+      );
+    }
 
   }
 
-  if (unidade > 0) {
+  if (tamanho >= 2) {
+
+    const dezenas = Number(texto[tamanho - 2]);
+
+    if (dezenas > 0) {
+      partes.push(
+        dezenas + (dezenas === 1 ? " DEZENA" : " DEZENAS")
+      );
+    }
+
+  }
+
+  const unidades = Number(texto[tamanho - 1]);
+
+  if (unidades > 0) {
 
     partes.push(
-      unidade +
-      (unidade === 1
-        ? " unidade"
-        : " unidades")
+      unidades + (unidades === 1 ? " UNIDADE" : " UNIDADES")
     );
 
   }
 
   document.getElementById("composicao").innerHTML =
-    "<strong>" +
-    numeroAtual +
-    "</strong><br>" +
-    partes.join(" + ");
+    "🔎 COMPOSIÇÃO:<br>" +
+    partes.join(" + ") +
+    "<br><strong>" +
+    numero +
+    "</strong>";
+
 }
 
 
-function atualizarPlacar() {
+function proximaPergunta() {
 
-  document.getElementById("placar").innerText =
-    "✅ ACERTOS: " +
-    acertos +
-    "     ❌ ERROS: " +
-    erros;
+  if (encerrado) {
+    return;
+  }
+
+  novaPergunta();
 }
 
 
-function proximaQuestao() {
+function atualizarContador() {
 
-  novaQuestao();
+  document.getElementById("contador").innerText =
+    "🎯 TENTATIVAS: " + tentativas +
+    "     ⭐ ACERTOS: " + acertos;
+
 }
 
 
 function encerrarJogo() {
 
-  document.getElementById("jogo").style.display =
-    "none";
+  encerrado = true;
 
-  let percentual =
-    tentativas > 0
-      ? Math.round(
-          (acertos / tentativas) * 100
-        )
-      : 0;
+  const nome =
+    document.getElementById("nome").value.trim() || "A criança";
 
-  document.getElementById("resultadoFinal").style.display =
-    "block";
+  document.getElementById("jogo").style.display = "none";
 
-  document.getElementById("resultadoFinal").innerHTML =
+  document.getElementById("resultado").style.display = "block";
 
-    "🏆 JOGO ENCERRADO!<br><br>" +
+  document.getElementById("resultado").innerHTML =
+    "⏹️ <strong>JOGO ENCERRADO!</strong><br><br>" +
+    "Muito bem, " + nome + "!<br><br>" +
+    "🎯 TENTATIVAS: " + tentativas + "<br>" +
+    "⭐ ACERTOS: " + acertos + "<br><br>" +
+    "Continue praticando! 🌟";
 
-    "Parabéns, " +
-    nomeJogador +
-    "!<br><br>" +
-
-    "🔢 TENTATIVAS: " +
-    tentativas +
-    "<br>" +
-
-    "✅ ACERTOS: " +
-    acertos +
-    "<br>" +
-
-    "❌ ERROS: " +
-    erros +
-    "<br>" +
-
-    "⭐ APROVEITAMENTO: " +
-    percentual +
-    "%<br><br>" +
-
-    "<button id='jogarNovamente' onclick='voltarInicio()'>" +
-    "🔄 JOGAR NOVAMENTE" +
-    "</button>";
+  document.getElementById("jogarNovamente").style.display =
+    "inline-block";
 }
 
 
 function voltarInicio() {
 
-  document.getElementById("resultadoFinal").style.display =
-    "none";
+  encerrado = false;
 
-  document.getElementById("inicio").style.display =
-    "block";
+  document.getElementById("jogo").style.display = "none";
 
-  document.getElementById("nome").value =
-    "";
+  document.getElementById("resultado").style.display = "none";
+
+  document.getElementById("jogarNovamente").style.display = "none";
+
+  document.getElementById("inicio").style.display = "block";
 
 }
+
 
 </script>
 
